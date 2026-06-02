@@ -677,7 +677,7 @@ function submitForm(e,id){
   btn.textContent='Sending...';
   btn.disabled=true;
   var payload = {name:name,phone:cleanedPhone,event:evt,pax:pax,date:date};
-  fetch('submit.php', {
+  fetch('/api/submit', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(payload)
@@ -751,5 +751,6 @@ function initPhoneInput(id){
 }
 window.addEventListener('DOMContentLoaded',function(){initPhoneInput('hf_phone');initPhoneInput('bf_phone');});
 </script>
+  
 </body>
 </html>
