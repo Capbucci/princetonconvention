@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5HDHRGZL');</script>
+<!-- End Google Tag Manager -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Princeton Convention Centre - Wedding and Event Venue in LB Nagar, East Hyderabad</title>
@@ -243,7 +250,10 @@ footer{background:var(--off-black);border-top:2px solid var(--wine)}
 </style>
 </head>
 <body>
-
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5HDHRGZL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <!-- HEADER -->
 <header>
   <div>
@@ -473,7 +483,7 @@ footer{background:var(--off-black);border-top:2px solid var(--wine)}
 <section class="halls-section" id="halls">
   <div class="sec-eyebrow"><span class="sec-eyebrow-line"></span>Venue Spaces</div>
   <div class="sec-title">Choose Your Hall</div>
-  <div class="sec-body">Three halls, each with its own character. Bookable independently or combined into a single grand floor.</div>
+  <div class="sec-">Three halls, each with its own character. Bookable independently or combined into a single grand floor.</div>
   <div class="halls-grid">
     <div class="hall-card">
       <div class="hall-card-top">
@@ -694,21 +704,32 @@ function submitForm(e,id){
     date: date
   };
 
-  fetch('/api/submit', {
+ fetch('https://n8n.testpad99.com/webhook/princeton-lander', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: payload.name,
+      phone: payload.phone,
+      event_type: payload.event,
+      guest_count: payload.pax,
+      event_date: payload.date,
+      form_location: id,
+      source: 'Princeton Landing Page',
+      page_url: window.location.href,
+      submitted_at: new Date().toISOString()
+    })
   })
-  .then(async function(res){
-    const data = await res.json().catch(() => ({}));
+.then(function(res){
 
-    if (!res.ok) {
-      throw new Error(data.message || 'Server error');
-    }
+  if (!res.ok) {
+    throw new Error('n8n webhook submission failed');
+  }
 
-    return data;
-  })
-  .then(function(data){
+  return { success: true };
+})
+.then(function(data){
     if (data.success) {
       btn.textContent = 'Callback Requested';
       btn.classList.add('sent');
