@@ -704,23 +704,23 @@ function submitForm(e,id){
     body: JSON.stringify({
       fields: [
         {
-          name: 'firstname',
+          name: 'full_name',
           value: payload.name
         },
         {
-          name: 'phone',
+          name: 'phone_no',
           value: payload.phone
         },
         {
-          name: 'event_type',
+          name: 'event_types',
           value: payload.event
         },
         {
-          name: 'number_of_guests',
+          name: 'guest_count',
           value: payload.pax
         },
         {
-          name: 'event_date',
+          name: 'event_dates',
           value: payload.date
         }
       ]
