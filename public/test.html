@@ -694,21 +694,48 @@ function submitForm(e,id){
     date: date
   };
 
-  fetch('/api/submit', {
+ fetch(
+  'https://api.hsforms.com/submissions/v3/integration/submit/245815071/bb9ba995-6afa-4142-a15c-7e5b596b9760',
+  {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(async function(res){
-    const data = await res.json().catch(() => ({}));
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      fields: [
+        {
+          name: 'firstname',
+          value: payload.name
+        },
+        {
+          name: 'phone',
+          value: payload.phone
+        },
+        {
+          name: 'event_type',
+          value: payload.event
+        },
+        {
+          name: 'number_of_guests',
+          value: payload.pax
+        },
+        {
+          name: 'event_date',
+          value: payload.date
+        }
+      ]
+    })
+  }
+)
+.then(function(res){
 
-    if (!res.ok) {
-      throw new Error(data.message || 'Server error');
-    }
+  if (!res.ok) {
+    throw new Error('HubSpot submission failed');
+  }
 
-    return data;
-  })
-  .then(function(data){
+  return { success: true };
+})
+.then(function(data){
     if (data.success) {
       btn.textContent = 'Callback Requested';
       btn.classList.add('sent');
